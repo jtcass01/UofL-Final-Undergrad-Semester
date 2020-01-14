@@ -25,11 +25,16 @@ def maxwell_boltzmann_distribution(E, Ef=0, T=300, boltzmann_constant = 1.380648
     return np.exp(-exp_value)
 
 
+def find_difference_threshold(energies, fermi_dirac_distributions, maxwell_boltzmann_distributions, percentage_threshold):
+    percent_error = (np.abs(fermi_dirac_distributions - maxwell_boltzmann_distributions) / fermi_dirac_distributions) * 100
+    indices_under_threshold = np.where(percent_error <= percentage_threshold)[0]
+    return energies[indices_under_threshold[0]]
+
 if __name__ == "__main__":
     print("A SEMICONDUCTOR HAS A BANDGAP OF 0.5 EV.  WHAT IS THE BANDGAP IN JOULES?")
     print("0.5 eV = ", convert_ev_to_joules(0.5), "J")
 
-    print("A SEMICONDUCTOR HAS A BANDGAP OF 2e−19 J.  WHAT IS THE BANDGAP IN EV?")
+    print("\nA SEMICONDUCTOR HAS A BANDGAP OF 2e−19 J.  WHAT IS THE BANDGAP IN EV?")
     print("2e−19 J = ", convert_joule_to_ev(2e-19), "eV")
 
     energies = np.linspace(-1, 1, 10000)
@@ -44,3 +49,7 @@ if __name__ == "__main__":
     plt.ylabel("probability [%]")
     plt.ylim((0, 200))
     plt.show()
+
+    print("\nOver what range does the maxwell-boltzmann distribution function approximate the Fermi-Dirac Distribution Function.")
+    print("Assuming 0.1% error is a sufficient approximation, the energy range is ", find_difference_threshold(energies, fermi_dirac_distributions, maxwell_boltzmann_distributions, 0.1),
+          "or greater.")
