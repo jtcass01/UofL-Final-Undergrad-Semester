@@ -7,15 +7,19 @@ def convert_ev_to_joules(electron_volts):
 def convert_joule_to_ev(joules):
     return joules * 6.242e18
 
-def fermi_dirac_distribution(E, Ef=0, T=300):
-    boltzmann_constant = 1.38064852e-23 # m^2*kg*s^-2*K^-1
-    # E and Ef are expected to be in eV
-    exp_value = (convert_ev_to_joules(E) - convert_ev_to_joules(Ef)) / (boltzmann_constant * T)
-
+def fermi_dirac_distribution(E, Ef=0, T=300, boltzmann_constant = 1.38064852e-23):
+    """
+        boltzmann_constant units are expected to be m^2*kg*s^-2*K^-1 or J*K^-1
+        # E and Ef units are expected to be in eV
+    """
+    exp_value = convert_ev_to_joules(E - Ef) / (boltzmann_constant * T)
     return 1 / ( 1 + np.exp(exp_value))
 
-def maxwell_boltzmann_distribution(E, Ef=0, T=300):
-    boltzmann_constant = 1.38064852e-23 # m^2*kg*s^-2*K^-1
+def maxwell_boltzmann_distribution(E, Ef=0, T=300, boltzmann_constant = 1.38064852e-23):
+    """
+        boltzmann_constant units are expected to be m^2*kg*s^-2*K^-1 or J*K^-1
+        # E and Ef units are expected to be in eV
+    """
     # E and Ef are expected to be in eV
     exp_value = convert_ev_to_joules(E - Ef) / (boltzmann_constant * T)
     return np.exp(-exp_value)
@@ -23,7 +27,7 @@ def maxwell_boltzmann_distribution(E, Ef=0, T=300):
 
 if __name__ == "__main__":
     print("A SEMICONDUCTOR HAS A BANDGAP OF 0.5 EV.  WHAT IS THE BANDGAP IN JOULES?")
-    print("0.5 Ev = ", convert_ev_to_joules(0.5), "J")
+    print("0.5 eV = ", convert_ev_to_joules(0.5), "J")
 
     print("A SEMICONDUCTOR HAS A BANDGAP OF 2e−19 J.  WHAT IS THE BANDGAP IN EV?")
     print("2e−19 J = ", convert_joule_to_ev(2e-19), "eV")
