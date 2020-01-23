@@ -51,5 +51,6 @@ if __name__ == "__main__":
     plt.show()
 
     print("\nOver what range does the maxwell-boltzmann distribution function approximate the Fermi-Dirac Distribution Function.")
-    print("Assuming 0.1% error is a sufficient approximation, the energy range is ", find_difference_threshold(energies, fermi_dirac_distributions, maxwell_boltzmann_distributions, 0.1),
+    print("Assuming 0.1% error is a sufficient approximation, the energy range is ",
+          find_difference_threshold(energies, fermi_dirac_distributions, maxwell_boltzmann_distributions, 0.1),
           "or greater.")
