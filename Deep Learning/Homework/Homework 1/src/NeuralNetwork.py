@@ -27,7 +27,7 @@ class NeuralNetwork(object):
 
         plt.plot(np.squeeze(self.costs))
         plt.ylabel('cost')
-        plt.xlabel('iterations (per tens)')
+        plt.xlabel('iterations')
         plt.title('Learning rate =' + str(learning_rate))
         plt.show()
 
