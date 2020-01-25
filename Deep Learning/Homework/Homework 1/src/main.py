@@ -3,6 +3,7 @@ import matplotlib.pyplot as plt
 
 from activation_functions import tanh, sigmoid, hardtanh
 from perceptron import Perceptron
+from NeuralNetwork import NeuralNetwork
 
 def question_1():
     """
@@ -88,6 +89,13 @@ def question_3():
         return (expected - actual)**2
 
     print("error", error(output, 0))
+
+    neural_network = NeuralNetwork([2, 3, 1])
+    neural_network.parameters['W1'] = np.array([[0.8, 0.4, 0.3], [0.2, 0.9, 0.5]]).reshape((3, 2))
+    neural_network.parameters['W2'] = np.array([0.3, 0.5, 0.9]).reshape((1, 3))
+    neural_network.train(input_array, np.array([0]), number_of_epochs=10)
+
+
 
 if __name__ == "__main__":
 #    question_1()
