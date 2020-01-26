@@ -1,9 +1,13 @@
 import numpy as np
 import matplotlib.pyplot as plt
 
+from sklearn.datasets import make_regression, make_blobs
+from keras import models, layers
+
 from activation_functions import tanh, sigmoid, hardtanh
 from perceptron import Perceptron
 from NeuralNetwork import NeuralNetwork
+
 
 def question_1():
     """
@@ -93,11 +97,76 @@ def question_3():
     neural_network = NeuralNetwork([2, 3, 1])
     neural_network.parameters['W1'] = np.array([[0.8, 0.4, 0.3], [0.2, 0.9, 0.5]]).reshape((3, 2))
     neural_network.parameters['W2'] = np.array([0.3, 0.5, 0.9]).reshape((1, 3))
-    neural_network.train(input_array, np.array([0]), number_of_epochs=100)
+    neural_network.train(input_array, np.array([0]), number_of_epochs=10)
+
+def question_4():
+    variance = 0.08
+    mu = 0
+    sigma = variance**0.5
+
+    #area_1_x, area_1_y = make_regression(n_samples=100, n_features=2, noise=sigma)
+    #area_1_x += 0.25
+    #area_1_y = np.array([1]*len(area_1_x))
+    #plt.scatter(area_1_x[:,0], area_1_x[:,1])
+    #plt.show()
+
+
+    """
+    area_1_x = np.random.normal(mu, sigma, 100) + 0.25
+    area_1_y = np.random.normal(mu, sigma, 100) + 0.25
+    area_1 = np.array(list(zip(area_1_x, area_1_y)))
+
+    area_2_x_1 = np.random.normal(mu, sigma, 33) + 0.75
+    area_2_x_2 = np.random.normal(mu, sigma, 34) + 0.75
+    area_2_x_3 = np.random.normal(mu, sigma, 33) + 0.25
+    area_2_x = np.concatenate((area_2_x_1, area_2_x_2, area_2_x_3), axis = 0)
+    area_2_y_1 = np.random.normal(mu, sigma, 33) + 0.25
+    area_2_y_2 = np.random.normal(mu, sigma, 34) + 0.75
+    area_2_y_3 = np.random.normal(mu, sigma, 33) + 0.75
+    area_2_y = np.concatenate((area_2_y_1, area_2_y_2, area_2_y_3), axis = 0)
+    area_2 = np.array(list(zip(area_2_x, area_2_y)))
+
+    """
+
+    centers = [[0.25, 0.75], [0.75, 0.75], [0.75, 0.25]]
+    center = [[0.25, 0.25]]
+    area_2, _ = make_blobs(n_samples=100, centers=centers, cluster_std=sigma)
+    area_2_targets = np.array([0]*len(area_2))
+    area_1, _ = make_blobs(n_samples=100, centers=center, cluster_std=sigma)
+    area_1_targets = np.array([1]*len(area_1))
+
+    print("area_1", area_1, area_1.shape)
+    print("area_1[:, 0]", area_1[:, 0], area_1[:, 0].shape)
+
+    plt.scatter(area_1[:, 0], area_1[:, 1], label='area_1')
+    plt.scatter(area_2[:, 0], area_2[:, 1], label='area_2')
+    plt.legend()
+    plt.show()
+
+    features = np.concatenate((area_1, area_2), axis = 0).reshape(2, -1)
+    targets = np.concatenate((area_1_targets, area_2_targets), axis = 0).reshape(1, -1)
+
+
+    model = models.Sequential()
+    model.add(layers.Dense(4, activation='relu', input_shape=(2,)))
+    model.add(layers.Dense(2, activation='relu'))
+    model.add(layers.Dense(1, activation='sigmoid'))
+    model.compile(optimizer='adam', loss='binary_crossentropy', metrics=['accuracy'])
+    model.fit(features, targets, epochs=100, batch_size=32)
+
+    """
+
+    grid = np.stack((features[0,:],features[1,:]))
+    grid = grid.T.reshape(-1,2)
+    outs = model.predict(grid)
+    y1 = outs.T[0].reshape(features[0,:].shape[0],features[0,:].shape[0])
+    plt.contourf(features[0,:],features[1,:],y1)
+    plt.show()
+    """
 
 
 
 if __name__ == "__main__":
 #    question_1()
 #    question_2()
-    question_3()
+    question_4()

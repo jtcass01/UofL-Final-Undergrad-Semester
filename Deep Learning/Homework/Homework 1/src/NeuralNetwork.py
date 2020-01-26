@@ -22,7 +22,7 @@ class NeuralNetwork(object):
 
             self.parameters = NeuralNetwork.update_parameters(self.parameters, gradients, learning_rate)
 
-            if epoch % 1:
+            if epoch % 10:
                 print(self.costs[len(self.costs)-1], 'cost @ epoch: ', epoch)
 
         plt.plot(np.squeeze(self.costs))
@@ -69,7 +69,7 @@ class NeuralNetwork(object):
         plt.ylabel('x2')
         plt.xlabel('x1')
         plt.title("Decision boundary plot")
-        plt.scatter(X[0, :], X[1, :], c=y, cmap=plt.cm.Spectral)
+        plt.scatter(X[0, :], X[1, :], cmap=plt.cm.Spectral)
         plt.show()
 
     @staticmethod
