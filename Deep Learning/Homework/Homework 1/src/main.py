@@ -147,6 +147,9 @@ def question_4():
     targets = np.concatenate((area_1_targets, area_2_targets), axis = 0).reshape(1, -1)
 
 
+    print("features", features.T)
+    print("targets", targets.T)
+
     model = models.Sequential()
     model.add(layers.Dense(4, activation='relu', input_shape=(2,)))
     model.add(layers.Dense(2, activation='relu'))
