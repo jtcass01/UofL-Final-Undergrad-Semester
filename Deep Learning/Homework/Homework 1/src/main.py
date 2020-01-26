@@ -7,7 +7,7 @@ from keras import models, layers
 from activation_functions import tanh, sigmoid, hardtanh
 from perceptron import Perceptron
 from NeuralNetwork import NeuralNetwork
-
+from utilities import gen_classification_symbolic
 
 def question_1():
     """
@@ -116,8 +116,12 @@ def question_4():
     """
 
     n_clusters = (2, 2)
-    data, rows, columns = make_checkerboard(shape=(1, 1), n_clusters=n_clusters, noise=sigma, shuffle=False)
+    data, rows, columns = make_checkerboard(shape=(200, 200), n_clusters=n_clusters, noise=sigma, shuffle=False)
     print("data", data)
+
+    x = gen_classification_symbolic(m="sin(x1)+cos(x2)", n_samples=200, flip_y=sigma)
+    df = pd.DataFrame(x)
+    print(x)
 
     plt.scatter(area_1[:, 0], area_1[:, 1], label='area_1')
     plt.scatter(area_2[:, 0], area_2[:, 1], label='area_2')
@@ -126,7 +130,6 @@ def question_4():
 
     features = np.concatenate((area_1, area_2), axis = 0).reshape(2, -1)
     targets = np.concatenate((area_1_targets, area_2_targets), axis = 0).reshape(1, -1)
-
 
     print("features", features.T)
     print("targets", targets.T)
