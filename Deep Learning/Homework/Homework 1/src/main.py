@@ -1,7 +1,7 @@
 import numpy as np
 import matplotlib.pyplot as plt
 
-from sklearn.datasets import make_regression, make_blobs
+from sklearn.datasets import make_regression, make_blobs, make_checkerboard
 from keras import models, layers
 
 from activation_functions import tanh, sigmoid, hardtanh
@@ -104,30 +104,8 @@ def question_4():
     mu = 0
     sigma = variance**0.5
 
-    #area_1_x, area_1_y = make_regression(n_samples=100, n_features=2, noise=sigma)
-    #area_1_x += 0.25
-    #area_1_y = np.array([1]*len(area_1_x))
-    #plt.scatter(area_1_x[:,0], area_1_x[:,1])
-    #plt.show()
-
 
     """
-    area_1_x = np.random.normal(mu, sigma, 100) + 0.25
-    area_1_y = np.random.normal(mu, sigma, 100) + 0.25
-    area_1 = np.array(list(zip(area_1_x, area_1_y)))
-
-    area_2_x_1 = np.random.normal(mu, sigma, 33) + 0.75
-    area_2_x_2 = np.random.normal(mu, sigma, 34) + 0.75
-    area_2_x_3 = np.random.normal(mu, sigma, 33) + 0.25
-    area_2_x = np.concatenate((area_2_x_1, area_2_x_2, area_2_x_3), axis = 0)
-    area_2_y_1 = np.random.normal(mu, sigma, 33) + 0.25
-    area_2_y_2 = np.random.normal(mu, sigma, 34) + 0.75
-    area_2_y_3 = np.random.normal(mu, sigma, 33) + 0.75
-    area_2_y = np.concatenate((area_2_y_1, area_2_y_2, area_2_y_3), axis = 0)
-    area_2 = np.array(list(zip(area_2_x, area_2_y)))
-
-    """
-
     centers = [[0.25, 0.75], [0.75, 0.75], [0.75, 0.25]]
     center = [[0.25, 0.25]]
     area_2, _ = make_blobs(n_samples=100, centers=centers, cluster_std=sigma)
@@ -135,8 +113,11 @@ def question_4():
     area_1, _ = make_blobs(n_samples=100, centers=center, cluster_std=sigma)
     area_1_targets = np.array([1]*len(area_1))
 
-    print("area_1", area_1, area_1.shape)
-    print("area_1[:, 0]", area_1[:, 0], area_1[:, 0].shape)
+    """
+
+    n_clusters = (2, 2)
+    data, rows, columns = make_checkerboard(shape=(1, 1), n_clusters=n_clusters, noise=sigma, shuffle=False)
+    print("data", data)
 
     plt.scatter(area_1[:, 0], area_1[:, 1], label='area_1')
     plt.scatter(area_2[:, 0], area_2[:, 1], label='area_2')
