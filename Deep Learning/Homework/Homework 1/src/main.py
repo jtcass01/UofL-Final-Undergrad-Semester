@@ -145,10 +145,10 @@ def question_4():
     area_2 = np.concatenate((bottom_right, top_right, top_left), axis=0)
     area_2_targets = [1] * len(area_2)
 
-#    plt.scatter(area_1[:, 0], area_1[:, 1], label="area_1")
-#    plt.scatter(area_2[:, 0], area_2[:, 1], label="area_2")
-#    plt.legend()
-#    plt.show()
+    plt.scatter(area_1[:, 0], area_1[:, 1], label="area_1")
+    plt.scatter(area_2[:, 0], area_2[:, 1], label="area_2")
+    plt.legend()
+    plt.show()
 
     features = np.concatenate((area_1, area_2),axis=0)
     targets = np.concatenate((area_1_targets, area_2_targets), axis=0)
@@ -158,7 +158,7 @@ def question_4():
     model.add(layers.Dense(2, activation='relu'))
     model.add(layers.Dense(1, activation='sigmoid'))
     model.compile(optimizer='adam', loss='binary_crossentropy', metrics=['accuracy'])
-    model.fit(features, targets, epochs=100, batch_size=32)
+    model.fit(features, targets, epochs=100, batch_size=32, verbose=1)
 
     """
 
