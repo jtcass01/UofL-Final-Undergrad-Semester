@@ -144,7 +144,7 @@ def question_4():
     model.add(layers.Dense(4, activation='relu', input_shape=(2,)))
     model.add(layers.Dense(2, activation='relu'))
     model.add(layers.Dense(1, activation='sigmoid'))
-    model.compile(optimizer='rms_prop', loss='binary_crossentropy', metrics=['accuracy'])
+    model.compile(optimizer='adam', loss='binary_crossentropy', metrics=['accuracy'])
 #    model.fit(features.T, targets.T, epochs=100, batch_size=32)
 
     """
