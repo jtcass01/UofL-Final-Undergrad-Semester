@@ -131,11 +131,6 @@ def plot_decision_boundary(X, y, model, title, steps=1000, cmap='RdBu'):
 
     return fig, ax
 
-def shuffle_data(X, Y):
-    c = list(zip(X, Y))
-    np.random.shuffle(c)
-    return zip(*c)
-
 def question_4():
     variance = 0.08
     mu = 0
@@ -189,7 +184,10 @@ def question_4():
     features = np.concatenate((area_1, area_2),axis=0)
     targets = np.concatenate((area_1_targets, area_2_targets), axis=0)
 
-    features, targets = shuffle_data(features, targets)
+    random_indices = np.arrange(features.shape[0])
+    np.random.shuffle(random_indices)
+    features = features[random_indices]
+    targets = targets[random_indices]
 
     model = models.Sequential()
     model.add(layers.Dense(4, activation='relu', input_shape=(2,)))
