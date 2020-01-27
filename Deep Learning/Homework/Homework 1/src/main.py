@@ -100,7 +100,7 @@ def question_3():
     neural_network.parameters['W2'] = np.array([0.3, 0.5, 0.9]).reshape((1, 3))
     neural_network.train(input_array, np.array([0]), number_of_epochs=10)
 
-def plot_decision_boundary(X, y, model, steps=1000, cmap='RdBu'):
+def plot_decision_boundary(X, y, model, title, steps=1000, cmap='RdBu'):
     cmap = plt.get_cmap(cmap)
 
     # Define region of interest by data limits
@@ -125,6 +125,7 @@ def plot_decision_boundary(X, y, model, steps=1000, cmap='RdBu'):
     ax.scatter(X[:,0], X[:,1], c=y, cmap=cmap, lw=0)
     ax.set_xlim((0, 1))
     ax.set_ylim((0, 1))
+    ax.set_title(title)
 
     plt.show()
 
@@ -190,7 +191,7 @@ def question_4():
     model.compile(optimizer='adam', loss='binary_crossentropy', metrics=['accuracy'])
     model.fit(features, targets, epochs=100, batch_size=32, verbose=1)
 
-    plot_decision_boundary(features, targets, model)
+    plot_decision_boundary(features, targets, model, title="4a")
 
     """
 
