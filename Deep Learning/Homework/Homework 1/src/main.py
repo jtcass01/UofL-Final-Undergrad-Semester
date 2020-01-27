@@ -2,7 +2,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 import pandas as pd
 
-from sklearn.datasets import make_regression, make_blobs, make_checkerboard
+from sklearn.datasets import make_circles
 from keras import models, layers
 
 from activation_functions import tanh, sigmoid, hardtanh
@@ -131,40 +131,17 @@ def plot_decision_boundary(X, y, model, title, steps=1000, cmap='RdBu'):
 
     return fig, ax
 
-def question_4():
+
+def generate_circle_data(mu, std_dev, radius=2):
+    x = np.random.normal(loc=mu, scale=std_dev, size=100)
+    y = (radius**2 - x**2)**0.5
+
+    return np.array(list(zip(x, y)))
+
+def question_4_a():
     variance = 0.08
     mu = 0
     sigma = variance**0.5
-
-
-    """
-    centers = [[0.25, 0.75], [0.75, 0.75], [0.75, 0.25]]
-    center = [[0.25, 0.25]]
-    area_2, _ = make_blobs(n_samples=100, centers=centers, cluster_std=sigma)
-    area_2_targets = np.array([0]*len(area_2))
-    area_1, _ = make_blobs(n_samples=100, centers=center, cluster_std=sigma)
-    area_1_targets = np.array([1]*len(area_1))
-
-
-    n_clusters = (2, 2)
-    data, rows, columns = make_checkerboard(shape=(200, 200), n_clusters=n_clusters, noise=sigma, shuffle=False)
-    print("data", data)
-
-    x = gen_classification_symbolic(m="sin(x1)+cos(x2)", n_samples=200, flip_y=sigma)
-    df = pd.DataFrame(x)
-    print(x)
-
-    plt.scatter(area_1[:, 0], area_1[:, 1], label='area_1')
-    plt.scatter(area_2[:, 0], area_2[:, 1], label='area_2')
-    plt.legend()
-    plt.show()
-
-    features = np.concatenate((area_1, area_2), axis = 0).reshape(2, -1)
-    targets = np.concatenate((area_1_targets, area_2_targets), axis = 0).reshape(1, -1)
-
-    print("features", features.T)
-    print("targets", targets.T)
-    """
 
     bottom_left = np.random.multivariate_normal(mean=[0.25, 0.25], cov=[[variance, 0], [0, variance]], size=100)
     bottom_right = np.random.multivariate_normal(mean=[0.25, 0.75], cov=[[variance, 0], [0, variance]], size=100)
@@ -198,19 +175,31 @@ def question_4():
 
     plot_decision_boundary(features, targets, model, title="4a")
 
-    """
-
-    grid = np.stack((features[0,:],features[1,:]))
-    grid = grid.T.reshape(-1,2)
-    outs = model.predict(grid)
-    y1 = outs.T[0].reshape(features[0,:].shape[0],features[0,:].shape[0])
-    plt.contourf(features[0,:],features[1,:],y1)
+def question_4_b():
+    variance = 0.08
+    area_1 = np.random.multivariate_normal(mean=[0, 0], cov=[[variance, 0], [0, variance]], size=100)
+    area_2, targets = make_circles(n_samples=100, noise=variance)
+    plt.scatter(area_1[:, 0], area_1[:, 1], label="area_1")
+    plt.scatter(area_2[:, 0], area_2[:, 1], label="area_2")
     plt.show()
-    """
 
+    area_1_targets = [0] * len(area_1)
+    area_2_targets = [1] * len(area_2)
 
+    features = np.concatenate((area_1, area_2),axis=0)
+    targets = np.concatenate((area_1_targets, area_2_targets), axis=0)
+
+    model = models.Sequential()
+    model.add(layers.Dense(4, activation='relu', input_shape=(2,)))
+    model.add(layers.Dense(2, activation='relu'))
+    model.add(layers.Dense(1, activation='sigmoid'))
+    model.compile(optimizer='adam', loss='binary_crossentropy', metrics=['accuracy'])
+    model.fit(features, targets, epochs=200, batch_size=32, verbose=1)
+
+    plot_decision_boundary(features, targets, model, title="4b")
 
 if __name__ == "__main__":
 #    question_1()
 #    question_2()
-    question_4()
+#    question_4_a()
+    question_4_b()
