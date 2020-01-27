@@ -133,7 +133,7 @@ def plot_decision_boundary(X, y, model, title, steps=1000, cmap='RdBu'):
 
 def shuffle_data(X, Y):
     c = list(zip(X, Y))
-    random.shuffle(c)
+    np.random.shuffle(c)
     return zip(*c)
 
 def question_4():
