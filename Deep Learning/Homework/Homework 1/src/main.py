@@ -124,7 +124,7 @@ def plot_decision_boundary(X, y, model, steps=1000, cmap='RdBu'):
     train_labels = model.predict(X)
     ax.scatter(X[:,0], X[:,1], c=y, cmap=cmap, lw=0)
 
-    ax.show()
+    plt.show()
 
     return fig, ax
 
