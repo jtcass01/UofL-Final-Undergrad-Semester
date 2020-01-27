@@ -100,6 +100,18 @@ def question_3():
     neural_network.parameters['W2'] = np.array([0.3, 0.5, 0.9]).reshape((1, 3))
     neural_network.train(input_array, np.array([0]), number_of_epochs=10)
 
+def plotModelOut(x,y,model):
+  '''
+  x,y: 2D MeshGrid input
+  model: Keras Model API Object
+  '''
+  grid = np.stack((x,y))
+  grid = grid.T.reshape(-1,2)
+  outs = model.predict(grid)
+  y1 = outs.T[0].reshape(x.shape[0],x.shape[0])
+  plt.contourf(x,y,y1)
+  plt.show()
+
 def question_4():
     variance = 0.08
     mu = 0
@@ -159,6 +171,8 @@ def question_4():
     model.add(layers.Dense(1, activation='sigmoid'))
     model.compile(optimizer='adam', loss='binary_crossentropy', metrics=['accuracy'])
     model.fit(features, targets, epochs=100, batch_size=32, verbose=1)
+
+    plot_decision_boundary(features, targets, model)
 
     """
 
