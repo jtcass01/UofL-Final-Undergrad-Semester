@@ -123,6 +123,8 @@ def plot_decision_boundary(X, y, model, steps=1000, cmap='RdBu'):
     # Get predicted labels on training data and plot
     train_labels = model.predict(X)
     ax.scatter(X[:,0], X[:,1], c=y, cmap=cmap, lw=0)
+    ax.set_xlim((0, 1))
+    ax.set_ylim((0, 1))
 
     plt.show()
 
