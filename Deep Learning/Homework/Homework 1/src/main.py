@@ -131,6 +131,11 @@ def plot_decision_boundary(X, y, model, title, steps=1000, cmap='RdBu'):
 
     return fig, ax
 
+def shuffle_data(X, Y):
+    c = list(zip(X, Y))
+    random.shuffle(c)
+    return zip(*c)
+
 def question_4():
     variance = 0.08
     mu = 0
@@ -184,12 +189,14 @@ def question_4():
     features = np.concatenate((area_1, area_2),axis=0)
     targets = np.concatenate((area_1_targets, area_2_targets), axis=0)
 
+    features, targets = shuffle_data(features, targets)
+
     model = models.Sequential()
     model.add(layers.Dense(4, activation='relu', input_shape=(2,)))
     model.add(layers.Dense(2, activation='relu'))
     model.add(layers.Dense(1, activation='sigmoid'))
     model.compile(optimizer='adam', loss='binary_crossentropy', metrics=['accuracy'])
-    model.fit(features, targets, epochs=100, batch_size=32, verbose=1)
+    model.fit(features, targets, epochs=200, batch_size=32, verbose=1)
 
     plot_decision_boundary(features, targets, model, title="4a")
 
