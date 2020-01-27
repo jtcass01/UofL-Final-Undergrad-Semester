@@ -154,11 +154,11 @@ def question_4():
     targets = np.concatenate((area_1_targets, area_2_targets), axis=0)
 
     model = models.Sequential()
-    model.add(layers.Dense(4, activation='relu', input_shape=(,2)))
+    model.add(layers.Dense(4, activation='relu', input_shape=(2,)))
     model.add(layers.Dense(2, activation='relu'))
     model.add(layers.Dense(1, activation='sigmoid'))
     model.compile(optimizer='adam', loss='binary_crossentropy', metrics=['accuracy'])
-    model.fit(features.T, targets.T, epochs=100, batch_size=32)
+    model.fit(features, targets, epochs=100, batch_size=32)
 
     """
 
