@@ -114,7 +114,6 @@ def question_4():
     area_1, _ = make_blobs(n_samples=100, centers=center, cluster_std=sigma)
     area_1_targets = np.array([1]*len(area_1))
 
-    """
 
     n_clusters = (2, 2)
     data, rows, columns = make_checkerboard(shape=(200, 200), n_clusters=n_clusters, noise=sigma, shuffle=False)
@@ -134,13 +133,18 @@ def question_4():
 
     print("features", features.T)
     print("targets", targets.T)
+    """
+
+    bottom_left = numpy.random.multivariate_normal(mean=[0.25, 0.25], cov=[[variance, 0], [0, variance]])
+    plt.scatter(bottom_left[0, :], bottom_left[1, :])
+    plt.show()
 
     model = models.Sequential()
     model.add(layers.Dense(4, activation='relu', input_shape=(2,)))
     model.add(layers.Dense(2, activation='relu'))
     model.add(layers.Dense(1, activation='sigmoid'))
-    model.compile(optimizer='adam', loss='binary_crossentropy', metrics=['accuracy'])
-    model.fit(features.T, targets.T, epochs=100, batch_size=32)
+    model.compile(optimizer='rms_prop', loss='binary_crossentropy', metrics=['accuracy'])
+#    model.fit(features.T, targets.T, epochs=100, batch_size=32)
 
     """
 
