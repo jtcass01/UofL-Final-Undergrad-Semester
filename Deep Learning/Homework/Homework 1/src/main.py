@@ -172,7 +172,7 @@ def question_4():
     model.compile(optimizer='adam', loss='binary_crossentropy', metrics=['accuracy'])
     model.fit(features, targets, epochs=100, batch_size=32, verbose=1)
 
-    plotModelOut(features, targets, model)
+    plotModelOut(features[0, :], features[1, :], model)
 
     """
 
