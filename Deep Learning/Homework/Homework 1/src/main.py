@@ -136,6 +136,7 @@ def question_4():
     """
 
     bottom_left = np.random.multivariate_normal(mean=[0.25, 0.25], cov=[[variance, 0], [0, variance]])
+    print("bottom_left", bottom_left.shape, bottom_left)
     plt.scatter(bottom_left[0, :], bottom_left[1, :])
     plt.show()
 
