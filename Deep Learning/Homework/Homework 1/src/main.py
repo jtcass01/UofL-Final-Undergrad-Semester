@@ -100,17 +100,31 @@ def question_3():
     neural_network.parameters['W2'] = np.array([0.3, 0.5, 0.9]).reshape((1, 3))
     neural_network.train(input_array, np.array([0]), number_of_epochs=10)
 
-def plotModelOut(x,y,model):
-  '''
-  x,y: 2D MeshGrid input
-  model: Keras Model API Object
-  '''
-  grid = np.stack((x,y))
-  grid = grid.T.reshape(-1,2)
-  outs = model.predict(grid)
-  y1 = outs.T[0].reshape(x.shape[0],x.shape[0])
-  plt.contourf(x,y,y1)
-  plt.show()
+def plot_decision_boundary(X, y, model, steps=1000, cmap='RdBu'):
+    cmap = plt.get_cmap(cmap)
+
+    # Define region of interest by data limits
+    xmin, xmax = X[:,0].min() - 1, X[:,0].max() + 1
+    ymin, ymax = X[:,1].min() - 1, X[:,1].max() + 1
+    steps = 1000
+    x_span = np.linspace(xmin, xmax, steps)
+    y_span = np.linspace(ymin, ymax, steps)
+    xx, yy = np.meshgrid(x_span, y_span)
+
+    # Make predictions across region of interest
+    labels = model.predict(np.c_[xx.ravel(), yy.ravel()])
+
+    # Plot decision boundary in region of interest
+    z = labels.reshape(xx.shape)
+
+    fig, ax = plt.subplots()
+    ax.contourf(xx, yy, z, cmap=cmap, alpha=0.5)
+
+    # Get predicted labels on training data and plot
+    train_labels = model.predict(X)
+    ax.scatter(X[:,0], X[:,1], c=y, cmap=cmap, lw=0)
+
+    return fig, ax
 
 def question_4():
     variance = 0.08
@@ -172,7 +186,7 @@ def question_4():
     model.compile(optimizer='adam', loss='binary_crossentropy', metrics=['accuracy'])
     model.fit(features, targets, epochs=100, batch_size=32, verbose=1)
 
-    plotModelOut(features[0, :], features[1, :], model)
+    plot_decision_boundary(features, targets, model)
 
     """
 
