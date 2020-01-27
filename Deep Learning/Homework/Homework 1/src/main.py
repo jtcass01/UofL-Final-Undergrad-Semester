@@ -136,16 +136,29 @@ def question_4():
     """
 
     bottom_left = np.random.multivariate_normal(mean=[0.25, 0.25], cov=[[variance, 0], [0, variance]], size=100)
-    print("bottom_left", bottom_left.shape, bottom_left)
-    plt.scatter(bottom_left[:, 0], bottom_left[:, 1])
-    plt.show()
+    bottom_right = np.random.multivariate_normal(mean=[0.25, 0.75], cov=[[variance, 0], [0, variance]], size=100)
+    top_right = np.random.multivariate_normal(mean=[0.75, 0.75], cov=[[variance, 0], [0, variance]], size=100)
+    top_left = np.random.multivariate_normal(mean=[0.75, 0.25], cov=[[variance, 0], [0, variance]], size=100)
+
+    area_1 = bottom_left
+    area_1_targets = [0] * len(area_1)
+    area_2 = np.concatenate((bottom_right, top_right, top_left), axis=0)
+    area_2_targets = [1] * len(area_2)
+
+#    plt.scatter(area_1[:, 0], area_1[:, 1], label="area_1")
+#    plt.scatter(area_2[:, 0], area_2[:, 1], label="area_2")
+#    plt.legend()
+#    plt.show()
+
+    features = np.concatenate((area_1, area_2),axis=0)
+    targets = np.concatenate((area_1_targets, area_2_targets), axis=0)
 
     model = models.Sequential()
-    model.add(layers.Dense(4, activation='relu', input_shape=(2,)))
+    model.add(layers.Dense(4, activation='relu', input_shape=(,2)))
     model.add(layers.Dense(2, activation='relu'))
     model.add(layers.Dense(1, activation='sigmoid'))
     model.compile(optimizer='adam', loss='binary_crossentropy', metrics=['accuracy'])
-#    model.fit(features.T, targets.T, epochs=100, batch_size=32)
+    model.fit(features.T, targets.T, epochs=100, batch_size=32)
 
     """
 
