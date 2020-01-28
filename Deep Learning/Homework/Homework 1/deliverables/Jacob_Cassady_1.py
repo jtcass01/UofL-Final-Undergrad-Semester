@@ -21,8 +21,8 @@ if __name__ == "__main__":
 
     input_array = np.linspace(-4, 4, 8000)
 
-    sigmoid_output = sigmoid(input_array)
-    tanh_output = tanh(input_array)
+    sigmoid_output = sigmoid(input_array)[0]
+    tanh_output = tanh(input_array)[0]
 
     plt.plot(input_array, sigmoid_output, label="sigmoid")
     plt.plot(input_array, tanh_output, label="tanh")

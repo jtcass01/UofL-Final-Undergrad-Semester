@@ -10,7 +10,7 @@ def sigmoid(v):
     return 1 / (1 + np.exp(-v)), v
 
 def tanh(v):
-    return 2 * sigmoid(2 *v) - 1, v
+    return 2 * sigmoid(2 *v)[0] - 1, v
 
 def hardtanh(v):
     v[v < -1] = -1
