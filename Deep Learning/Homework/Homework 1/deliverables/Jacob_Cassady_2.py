@@ -20,8 +20,8 @@ if __name__ == "__main__":
     input_array = np.linspace(-4, 4, 8000)
 
     print("\ta. Sigmoid: Φ(−v) = 1 − Φ(v)")
-    left_side = sigmoid(-input_array)
-    right_side = 1 - sigmoid(input_array)
+    left_side = sigmoid(-input_array)[0]
+    right_side = 1 - sigmoid(input_array)[0]
     plt.title("a. Sigmoid: Φ(−v) = 1 − Φ(v)")
     plt.plot(input_array, left_side, label="left_side")
     plt.plot(input_array, right_side, label="right_side")
@@ -30,8 +30,8 @@ if __name__ == "__main__":
     plt.show()
 
     print("\tb. Tanh activation: Φ(−v) = −Φ(v)")
-    left_side = tanh(-input_array)
-    right_side = -1 * tanh(input_array)
+    left_side = tanh(-input_array)[0]
+    right_side = -1 * tanh(input_array)[0]
     plt.title("b. Tanh activation: Φ(−v) = −Φ(v)")
     plt.plot(input_array, left_side, label="left_side")
     plt.plot(input_array, right_side, label="right_side")
@@ -40,8 +40,8 @@ if __name__ == "__main__":
     plt.show()
 
     print("\tc. Hard tanh activation: Φ(−v) = −Φ(v)")
-    left_side = hardtanh(-input_array)
-    right_side = -1 * hardtanh(input_array)
+    left_side = hardtanh(-input_array)[0]
+    right_side = -1 * hardtanh(input_array)[0]
     plt.title("c. Hard tanh activation: Φ(−v) = −Φ(v)")
     plt.plot(input_array, left_side, label="left_side")
     plt.plot(input_array, right_side, label="right_side")
