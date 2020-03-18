@@ -133,9 +133,24 @@ if __name__ == "__main__":
     model.add(layers.Dense(256, activation='relu'))
     model.add(layers.Dense(6, activation='softmax'))
     model.compile(loss='categorical_crossentropy', optimizer="adam", metrics=['accuracy'])
-    model.fit(X_train, Y_train, epochs=20, batch_size=32, validation_data=(X_validation, Y_validation))
+    training_history = model.fit(X_train, Y_train, epochs=20, batch_size=32, validation_data=(X_validation, Y_validation))
 
-    # Evaluate Model
+    # Display Training history graphs
+    history_dict = training_history.history
+    training_loss_values = history_dict['loss']
+    validation_loss_values = history_dict['val_loss']
+
+    epochs = range(1, len(training_loss_values) + 1)
+
+    plt.plot(epochs, training_loss_values, 'bo', label='Training loss')
+    plt.plot(epochs, validation_loss_values, 'b', label='Validation loss')
+    plt.title('Training and validation loss')
+    plt.xlabel('Epochs')
+    plt.ylabel('Loss')
+    plt.legend()
+    plt.show()
+
+    # Evaluate Model On Test Data
     predictions = model.evaluate(X_test, Y_test)
     print("Test Loss = " + str(predictions[0]))
     print("Test accuracy = " + str(predictions[1]))
