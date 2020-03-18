@@ -118,7 +118,7 @@ def prepare_data():
             Y_validation.append(target)
             test = True
 
-    return X_train, Y_train, X_test, Y_test, X_validation, Y_validation
+    return X_train, Y_train, np.array(X_test), np.array(Y_test), np.array(X_validation), np.array(Y_validation)
 
 if __name__ == "__main__":
     # Retrieve data
