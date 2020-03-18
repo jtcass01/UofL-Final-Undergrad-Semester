@@ -3,7 +3,9 @@ import math
 import os
 import sklearn
 import random
+
 import numpy as np
+import matplotlib.pyplot as plt
 
 from keras.applications import VGG16
 from keras import layers, models
@@ -139,9 +141,7 @@ if __name__ == "__main__":
     history_dict = training_history.history
     training_loss_values = history_dict['loss']
     validation_loss_values = history_dict['val_loss']
-
     epochs = range(1, len(training_loss_values) + 1)
-
     plt.plot(epochs, training_loss_values, 'bo', label='Training loss')
     plt.plot(epochs, validation_loss_values, 'b', label='Validation loss')
     plt.title('Training and validation loss')
