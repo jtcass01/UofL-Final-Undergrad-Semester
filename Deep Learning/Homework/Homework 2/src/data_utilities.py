@@ -123,7 +123,7 @@ if __name__ == "__main__":
     model.add(conv_base)
     model.add(layers.Flatten())
     model.add(layers.Dense(256, activation='relu'))
-    model.add(layers.Dense(10, activation='softmax'))
+    model.add(layers.Dense(6, activation='softmax'))
     model.compile(loss='categorical_crossentropy', optimizer="adam", metrics=['accuracy'])
     model.fit(X_train, Y_train, epochs=20, batch_size=32, validation_data=(X_validation, Y_validation))
 
