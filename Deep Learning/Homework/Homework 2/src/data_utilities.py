@@ -100,15 +100,23 @@ def prepare_data():
 
     # Split test set into test and valdiation sets
     test_set = np.array(list(zip(X_test, Y_test)))
+    test = False
+
     random.shuffle(test_set)
-    new_test_set = test_set[:60, :]
-    validation_set = test_set[-60:, :]
+    X_test = list([])
+    Y_test = list([])
+    X_validation = list([])
+    Y_validation = list([])
 
-    X_test = new_test_set[:, 0]
-    Y_test = new_test_set[:, 1]
-
-    X_validation = validation_set[:, 0]
-    Y_validation = validation_set[:, 1]
+    for feature, target in test_set:
+        if test:
+            X_test.append(feature)
+            Y_test.append(target)
+            test = False
+        else:
+            X_validation.append(feature)
+            Y_validation.append(target)
+            test = True
 
     return X_train, Y_train, X_test, Y_test, X_validation, Y_validation
 
