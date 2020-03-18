@@ -6,6 +6,7 @@ import random
 import numpy as np
 
 from keras.applications import VGG16
+from keras import layers, models
 
 def load_dataset(relative_directory_path):
     """
@@ -116,7 +117,7 @@ if __name__ == "__main__":
     X_train, Y_train, X_test, Y_test, X_validation, Y_validation = prepare_data()
 
     # Train Model
-    model = Sequential()
+    model = models.Sequential()
     conv_base = VGG16(weights='imagenet', include_top=False, input_shape=(64, 64, 3))
     conv_base.trainable = False
     model.add(conv_base)
