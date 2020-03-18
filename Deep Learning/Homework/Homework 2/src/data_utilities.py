@@ -135,7 +135,7 @@ if __name__ == "__main__":
     model.add(layers.Dense(256, activation='relu'))
     model.add(layers.Dense(6, activation='softmax'))
     model.compile(loss='categorical_crossentropy', optimizer="adam", metrics=['accuracy'])
-    training_history = model.fit(X_train, Y_train, epochs=20, batch_size=32, validation_data=(X_validation, Y_validation))
+    training_history = model.fit(X_train, Y_train, epochs=17, batch_size=32, validation_data=(X_validation, Y_validation))
 
     # Display Training history graphs
     history_dict = training_history.history
